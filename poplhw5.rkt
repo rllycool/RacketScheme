@@ -1,3 +1,6 @@
+;ethan tillotson
+;113498907
+
 #lang racket
 
 ;add 
@@ -55,8 +58,8 @@
 (define (poly_mul apol bpol)
   (if(null? apol) '()
      (if(null? bpol) '()
-        (poly_add(poly-list-of-list (car apol) bpol)
-                (cons '() (poly_mul (cdr apol) bpol)))))
+        (trimempty (poly_add(poly-list-of-list (car apol) bpol)
+                (cons '() (poly_mul (cdr apol) bpol))))))
   )
 
 ;removing zeros and empty lists
@@ -65,10 +68,39 @@
       (if(not (= 0 (car (reverse poly)))) poly
           (trim0 (reverse (cdr (reverse poly))))))
   )
-
 (define (trimempty L)
   (if (null? L) null
       (if(not (null? (car (reverse L)))) L
           (trimempty (reverse (cdr (reverse L))))))
   )
         
+
+(define (der_helper l1 n) ;From Lecture
+  (if (null? l1) '()
+      (cons (* n (car l1))
+            (der_helper (cdr l1) (+ n 1)))))
+
+
+(define (der l1) ;From Lecture
+  (if (null? l1) '()
+      (if (null? (cdr l1)) '() (der_helper (cdr l1) 1) ) ))
+
+(define (poly_derx apol)
+  (if(null? apol) '()
+      (trimempty (cons(der(car apol))
+                (poly_derx (cdr apol)))))
+     
+  )
+     
+  
+
+
+
+
+
+
+
+
+
+
+
