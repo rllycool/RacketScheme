@@ -4,18 +4,18 @@
 (define (poly_add apol bpol)
   (if (null? apol) bpol
       (if (null? bpol) apol
-          (cons (addup (car apol) (car bpol))
-                (poly_add (cdr apol) (cdr bpol)))))
+          (trimempty(cons (addup (car apol) (car bpol))
+                (poly_add (cdr apol) (cdr bpol))))))
   )
 
 (define (addup l1 l2) ; From Lecture
   (if (null? l1) l2
       (if (null? l2) l1
  
-          ( cons (+ (car l1) (car l2))
-                (addup (cdr l1) (cdr l2)))))
+          (trim0(cons (+ (car l1) (car l2))
+                (addup (cdr l1) (cdr l2))))))
   )
-z
+                    
 ;sub
 (define (poly_sub apol bpol)
    (if (null? apol) bpol
@@ -59,7 +59,16 @@ z
                 (cons '() (poly_mul (cdr apol) bpol)))))
   )
 
+;removing zeros and empty lists
+(define (trim0 poly)
+  (if (null? poly) '()
+      (if(not (= 0 (car (reverse poly)))) poly
+          (trim0 (reverse (cdr (reverse poly))))))
+  )
+
+(define (trimempty L)
+  (if (null? L) null
+      (if(not (null? (car (reverse L)))) L
+          (trimempty (reverse (cdr (reverse L))))))
+  )
         
-(define (checkempty l1 l2)
-  (cond (0 car l1) (cons('())
-               (cdr l1))))
